@@ -1,0 +1,64 @@
+sml
+name MakeParser
+
+terminal LOWER_IDENT of string
+terminal UPPER_IDENT of string
+
+terminal LPAREN
+terminal RPAREN
+
+terminal COLON
+terminal COMMA
+terminal BAR
+terminal PLUS
+terminal MINUS
+terminal STAR
+terminal EQUAL
+terminal RARROW precr 20
+terminal RDARROW
+
+terminal FN
+terminal FST
+terminal SND
+terminal INL
+terminal INR
+terminal CASE
+terminal END
+terminal THROW
+terminal CATCH
+terminal BOTTOM
+terminal UNIT
+
+nonterminal Term : term =
+  1:TermApp                                    => term_id
+  FN 1:LOWER_IDENT COLON 2:Type RDARROW 3:Term => tabs
+  CASE 1:Term RDARROW 2:LOWER_IDENT RDARROW 3:Term BAR 4:LOWER_IDENT RDARROW 5:Term END => tcase
+  THROW 1:UPPER_IDENT 2:TermAtom COLON 3:Type     => tthrow
+  CATCH 1:UPPER_IDENT COLON 2:Type RDARROW 3:Term => tcatch
+  INL 1:TermAtom COLON 2:Type                     => tinl
+  INR 1:TermAtom COLON 2:Type                     => tinr
+
+nonterminal TermApp : term =
+  1:TermAtom           => term_id
+  FST 1:TermAtom       => tfst
+  SND 1:TermAtom       => tsnd
+  1:TermApp 2:TermAtom => tapp
+
+nonterminal TermAtom : term =
+  LPAREN 1:Term RPAREN              => term_id
+  1:LOWER_IDENT                     => tvar
+  LPAREN 1:Term COMMA 2:Term RPAREN => tpair
+  LPAREN RPAREN                     => tunit
+
+nonterminal Type : ty =
+  1:TypeAtom                 => type_id
+  1:Type RARROW 2:Type       => tyarrow
+  1:TypeAtom PLUS 2:TypeAtom => tysum
+  1:TypeAtom STAR 2:TypeAtom => typrod
+
+nonterminal TypeAtom : ty =
+  LPAREN 1:Type RPAREN => type_id
+  BOTTOM               => tybottom
+  UNIT                 => tyunit
+
+start Term

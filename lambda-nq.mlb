@@ -1,0 +1,29 @@
+$(SML_LIB)/basis/basis.mlb
+cmlib/cmlib.mlb
+wbt/wbt.mlb
+
+type.sml
+term.sml
+
+basis S = bas
+  env.sml
+  statics.sml
+end
+
+basis P = bas
+  lexer/lexer.mlb
+  position.sml
+  token.sml
+
+  lexer.sml
+
+  make_parser.sml
+  parser.sml
+end
+
+dynamics.sml
+
+open S P
+
+lambda-nq.sml
+main.sml
