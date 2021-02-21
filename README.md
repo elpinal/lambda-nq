@@ -35,7 +35,7 @@ catch Y : bottom =>
   throw Y (throw X () : bottom) : bottom
 ```
 
-The following is ill-typed because `X` is inaccessible inside tha lambda abstraction:
+The following is ill-typed because `X` is inaccessible inside the lambda abstraction:
 
 ```
 catch X : unit -> unit =>
