@@ -7,13 +7,40 @@ Lambda NQ with call-by-value, left-to-right evaluation.
 Prerequisites: MLKit or MLton, and [cmyacc](http://www.cs.cmu.edu/~crary/cmtool/).
 
 ```bash
-$ make
+$ make mlkit
+```
+
+Or,
+
+```bash
+$ make mlton
 ```
 
 ## Usage
 
 ```bash
 $ ./lambda-nq [filename]
+```
+
+## Examples
+
+```
+catch X : unit =>
+  throw X () : bottom
+```
+
+```
+catch X : unit =>
+catch Y : bottom =>
+  throw Y (throw X () : bottom) : bottom
+```
+
+The following is ill-typed because `X` is inaccessible inside tha lambda abstraction:
+
+```
+catch X : unit -> unit =>
+  fn x : unit =>
+    throw X (fn y : unit => y) : unit
 ```
 
 ## Reference
