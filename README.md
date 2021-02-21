@@ -4,7 +4,7 @@ Lambda NQ with call-by-value, left-to-right evaluation.
 
 ## Build
 
-Prerequisites: MLKit and cmyacc.
+Prerequisites: MLKit or MLton, and cmyacc.
 
 ```bash
 $ make
